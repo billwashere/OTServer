@@ -1,12 +1,13 @@
-	defmodule OTTextSnapshot do
+defmodule OTTextDocument do
 defstruct data: "", ottype: "text"
 end
 
 defmodule OTText do
-def new(initial), do: %OTTextSnapshot{data: initial}
-def apply(snapshot,op) do
+def new do %OTTextDocument{} end
+def new(initial), do: %OTTextDocument{data: initial}
+def apply(document,op) do
 	checkOp(op)
-	state = {snapshot,0}
+	state = {document,0}
 	{doc,_} = List.foldl(op, state, fn (x, acc) -> cond do
 		is_number(x) ->
 			{s,p} = acc
